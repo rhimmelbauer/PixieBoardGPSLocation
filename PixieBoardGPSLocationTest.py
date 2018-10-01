@@ -1,8 +1,11 @@
 import PixieBoardGPSLocation
 
 def TestEnableATCommands():
+	pxbdGPSLocation = PixieBoardGPSLocation()
+	isEnabled, raw, error = pxbdGPSLocation.EnableATCommands()
 	testResult = ""
-	print(testResult)
+	print("Enabled: {}\n Output: {}\n Error: {}".format(isEnabled, raw, error))
+	
 
 def TestConfigureGPSLocation():
 	testResult = ""

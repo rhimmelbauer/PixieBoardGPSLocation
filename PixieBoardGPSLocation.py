@@ -33,9 +33,9 @@ class PixieBoardGPSLocation():
 		command = subprocess.Popen([ENABLE_AT_COMMAND], stdout=subprocess.PIPE, shell=True)
 		(command_output, error) = command.communicate(PIXIE_BOARDS_PASSWORD)
 		if command_output == COMMAND_OK_CALLBACK:
-			return True
+			return True, command_output, error
 		else:
-			return False
+			return False, command_output, error
 
 	def ConfigureGPSTracking():
 		command = subprocess.Popen([CONFIGURE_GPS_TRACKING], stdout=subprocess.PIPE, shell=True)
