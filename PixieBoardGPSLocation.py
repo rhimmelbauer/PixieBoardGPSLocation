@@ -1,9 +1,10 @@
 import subprocess
 
 
-class PixieBoardGPSLocation():
+class PixieBoardGPSLocation():		
 
-	def InitClassConstants(self):
+	def __init__(self):
+
 		self.PIXIE_BOARDS_PASSWORD = "pixiepro"
 		self.COMMAND_OK_CALLBACK = "OK"
 		self.ENABLE_AT_COMMAND = "echo 'ATE1' | socat - /dev/ttyUSB2,cr | grep 'OK'"
@@ -11,7 +12,6 @@ class PixieBoardGPSLocation():
 		self.GET_GPS_LOCATION = "echo 'AT+QGPSLOC?' | socat - /dev/ttyUSB2,cr"
 		self.GET_GPS_LOCATION_PRETTY = "echo 'AT+QGPSLOC=2' | socat - /dev/ttyUSB2,cr"
 
-	def InitClassVariables(self):
 		self.ModemStatus = ""
 
 		self.UTCTime = ""
@@ -25,12 +25,6 @@ class PixieBoardGPSLocation():
 		self.SpeedOverGroundKnots = ""
 		self.Date = ""
 		self.NumberOfSatellites = ""
-
-	def __init__(self):
-
-		InitClassConstants()
-
-		InitClassVariables()
 
 
 	def EnableATCommands(self):
