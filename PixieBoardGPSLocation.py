@@ -47,7 +47,7 @@ class PixieBoardGPSLocation():
 
 	def SessionStatus(self):
 		(command_output, error) = self.SendShellCommand(self.SESSION_STATUS)
-		if (str(command_output)[:-2] == "1":
+		if (str(command_output)[:-2]) == "1":
 			return True
 		else:
 			return False
