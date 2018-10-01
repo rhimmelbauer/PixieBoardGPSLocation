@@ -71,6 +71,7 @@ class PixieBoardGPSLocation():
 			return False, command_output, error
 
 	def GetGPSLocationPretty(self):
+		(command_output, error) = self.SendShellCommand(self.GET_GPS_LOCATION_PRETTY)
 		if self.ParseOKInMsg(command_output):
 			self.ParseGPSLocation(command_output)
 			return True, command_output, error
