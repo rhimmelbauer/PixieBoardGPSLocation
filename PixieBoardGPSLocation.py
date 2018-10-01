@@ -10,7 +10,7 @@ class PixieBoardGPSLocation():
 		InitClassVariables()
 		
 
-	InitClassVariables(self):
+	def InitClassVariables(self):
 		self.ModemStatus = ""
 
 		self.UTCTime = ""
@@ -25,7 +25,7 @@ class PixieBoardGPSLocation():
 		self.Date = ""
 		self.NumberOfSatellites = ""
 
-	InitClassConstants(self):
+	def InitClassConstants(self):
 		self.PIXIE_BOARDS_PASSWORD = "pixiepro"
 		self.COMMAND_OK_CALLBACK = "OK"
 		self.ENABLE_AT_COMMAND = "echo 'ATE1' | socat - /dev/ttyUSB2,cr | grep 'OK'"
