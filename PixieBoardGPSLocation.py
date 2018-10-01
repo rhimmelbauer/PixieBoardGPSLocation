@@ -7,7 +7,7 @@ class PixieBoardGPSLocation():
 
 		self.PIXIE_BOARDS_PASSWORD = "pixiepro"
 		self.COMMAND_OK_CALLBACK = "OK"
-		self.ENABLE_AT_COMMAND = "echo 'ATE1' | socat - /dev/ttyUSB2,cr | grep 'OK'"
+		self.ENABLE_AT_COMMAND = "echo 'ATE1' | socat - /dev/ttyUSB2,cr"
 		self.CONFIGURE_GPS_TRACKING = "echo 'AT+QGPS=1,30,50,0,1' | socat - /dev/ttyUSB2,cr | grep 'OK'"
 		self.GET_GPS_LOCATION = "echo 'AT+QGPSLOC?' | socat - /dev/ttyUSB2,cr"
 		self.GET_GPS_LOCATION_PRETTY = "echo 'AT+QGPSLOC=2' | socat - /dev/ttyUSB2,cr"
@@ -39,17 +39,19 @@ class PixieBoardGPSLocation():
 		command = subprocess.Popen([self.CONFIGURE_GPS_TRACKING], stdout=subprocess.PIPE, shell=True)
 		(command_output, error) = command.communicate(self.PIXIE_BOARDS_PASSWORD)
 		if command_output == self.COMMAND_OK_CALLBACK:
-			return True
+			return True, command_output, error
 		else:
-			return False
+			return False, command_output, error
 
 	def GetGPSLocation(self):
 		command = subprocess.Popen([self.GET_GPS_LOCATION], stdout=subprocess.PIPE, shell=True)
 		(command_output, error) = command.communicate(self.PIXIE_BOARDS_PASSWORD)
+		return command_output, error
 
 	def GetGPSLocationPretty(self):
 		command = subprocess.Popen([self.GET_GPS_LOCATION_PRETTY], stdout=subprocess.PIPE, shell=True)
 		(command_output, error) = command.communicate(self.PIXIE_BOARDS_PASSWORD)
+		return command_output, error
 
 	def ParseGPSLocation(self, command_output):
 		locationData = command_output.split(",")
