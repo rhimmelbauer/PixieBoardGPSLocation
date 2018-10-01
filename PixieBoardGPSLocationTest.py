@@ -1,4 +1,4 @@
-import PixieBoardGPSLocation
+from PixieBoardGPSLocation import PixieBoardGPSLocation
 
 def TestEnableATCommands():
 	pxbdGPSLocation = PixieBoardGPSLocation()
