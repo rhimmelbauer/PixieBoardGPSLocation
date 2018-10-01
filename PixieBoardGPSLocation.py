@@ -37,21 +37,22 @@ class PixieBoardGPSLocation():
 			return False, command_output, error
 
 	def StopSession(self):
-		if self.SessionStatus():
+		sessionStatus, sessionOutput, sessionError = self.SessionStatus()
+		if sessionStatus:
 			(command_output, error) = self.SendShellCommand(self.STOP_SESSION)
 			if self.ParseOKInMsg(command_output):
 				return True, command_output, error
 			else:
 				return False, command_output, error
-
+		else:
+			return False, sessionOutput, sessionError
 
 	def SessionStatus(self):
 		(command_output, error) = self.SendShellCommand(self.SESSION_STATUS)
-		print(str(command_output)[-4:-3])
 		if (str(command_output)[-4:-3]) == "1":
-			return True
+			return True, command_output, error
 		else:
-			return False
+			return False, command_output, error
 
 
 	def ConfigureGPSTracking(self):
@@ -63,11 +64,18 @@ class PixieBoardGPSLocation():
 
 	def GetGPSLocation(self):
 		(command_output, error) = self.SendShellCommand(self.GET_GPS_LOCATION)
-		return command_output, error
+		if self.ParseOKInMsg(command_output):
+			self.ParseGPSLocation(command_output)
+			return True, command_output, error
+		else:
+			return False, command_output, error
 
 	def GetGPSLocationPretty(self):
-		(command_output, error) = self.SendShellCommand(self.GET_GPS_LOCATION_PRETTY)
-		return command_output, error
+		if self.ParseOKInMsg(command_output):
+			self.ParseGPSLocation(command_output)
+			return True, command_output, error
+		else:
+			return False, command_output, error
 
 	def SendShellCommand(self, shellCommand):
 		command = subprocess.Popen([shellCommand], stdout=subprocess.PIPE, shell=True)
