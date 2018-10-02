@@ -29,17 +29,17 @@ class PixieBoardGPSLocation():
 		self.NumberOfSatellites = ""
 
 
-	def EnableATCommands(self):
-		(command_output, error) = self.SendShellCommand(self.ENABLE_AT_COMMAND)
+	def EnableATCommands(self, shell_command=self.ENABLE_AT_COMMAND):
+		(command_output, error) = self.SendShellCommand(shell_command)
 		if self.ParseOKInMsg(command_output):
 			return True, command_output, error
 		else:
 			return False, command_output, error
 
-	def StopSession(self):
+	def StopSession(self, shell_command=self.STOP_SESSION):
 		sessionStatus, sessionOutput, sessionError = self.SessionStatus()
 		if sessionStatus:
-			(command_output, error) = self.SendShellCommand(self.STOP_SESSION)
+			(command_output, error) = self.SendShellCommand(shell_command)
 			if self.ParseOKInMsg(command_output):
 				return True, command_output, error
 			else:
@@ -47,31 +47,31 @@ class PixieBoardGPSLocation():
 		else:
 			return False, sessionOutput, sessionError
 
-	def SessionStatus(self):
-		(command_output, error) = self.SendShellCommand(self.SESSION_STATUS)
+	def SessionStatus(self, shell_command=self.SESSION_STATUS):
+		(command_output, error) = self.SendShellCommand(shell_command)
 		if (str(command_output)[-4:-3]) == "1":
 			return True, command_output, error
 		else:
 			return False, command_output, error
 
 
-	def ConfigureGPSTracking(self):
-		(command_output, error) = self.SendShellCommand(self.CONFIGURE_GPS_TRACKING)
+	def ConfigureGPSTracking(self, shell_command=self.CONFIGURE_GPS_TRACKING):
+		(command_output, error) = self.SendShellCommand(shell_command)
 		if self.ParseOKInMsg(command_output):
 			return True, command_output, error
 		else:
 			return False, command_output, error
 
-	def GetGPSLocation(self):
-		(command_output, error) = self.SendShellCommand(self.GET_GPS_LOCATION)
+	def GetGPSLocation(self, shell_command=self.GET_GPS_LOCATION):
+		(command_output, error) = self.SendShellCommand(shell_command)
 		if self.ParseOKInMsg(command_output):
 			self.ParseGPSLocation(command_output)
 			return True, command_output, error
 		else:
 			return False, command_output, error
 
-	def GetGPSLocationPretty(self):
-		(command_output, error) = self.SendShellCommand(self.GET_GPS_LOCATION_PRETTY)
+	def GetGPSLocationPretty(self, shell_command=self.GET_GPS_LOCATION_PRETTY):
+		(command_output, error) = self.SendShellCommand(shell_command)
 		if self.ParseOKInMsg(command_output):
 			self.ParseGPSLocation(command_output)
 			return True, command_output, error
