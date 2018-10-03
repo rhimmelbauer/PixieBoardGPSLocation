@@ -35,7 +35,7 @@ class PixieBoardGPSLocation():
 
 	def CheckModemStatus(self):
 		(command_output, error) = self.SendShellCommand(CHECK_MODEM_STATUS)
-		if self.ParseOKInMsg(command_output):
+		if self.ParseCheckForValueZero(command_output):
 			return True, command_output, error
 		else:
 			return False, command_output, error
