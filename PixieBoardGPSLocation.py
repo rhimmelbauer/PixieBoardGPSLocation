@@ -1,5 +1,10 @@
 import subprocess
+import time
 
+
+
+CHECK_MODEM_STATUS = "mmcli -L | grep No | wc -l"
+ZERO_STRING = "0"
 PIXIE_BOARDS_PASSWORD = "pixiepro"
 COMMAND_OK_CALLBACK = "OK"
 ENABLE_AT_COMMAND = "echo 'ATE1' | socat - /dev/ttyUSB2,cr"
@@ -28,9 +33,14 @@ class PixieBoardGPSLocation():
 		self.Date = ""
 		self.NumberOfSatellites = ""
 
+	def CheckModemStatus(self):
+		(command_output, error) = self.SendShellCommand(CHECK_MODEM_STATUS)
+		if self.ParseOKInMsg(command_output):
+			return True, command_output, error
+		else:
+			return False, command_output, error
 
 	def EnableATCommands(self, shell_command=ENABLE_AT_COMMAND):
-		print(shell_command)
 		(command_output, error) = self.SendShellCommand(shell_command)
 		if self.ParseOKInMsg(command_output):
 			return True, command_output, error
@@ -57,6 +67,7 @@ class PixieBoardGPSLocation():
 
 
 	def ConfigureGPSTracking(self, shell_command=CONFIGURE_GPS_TRACKING):
+		self.StopSession()
 		(command_output, error) = self.SendShellCommand(shell_command)
 		if self.ParseOKInMsg(command_output):
 			return True, command_output, error
@@ -78,6 +89,14 @@ class PixieBoardGPSLocation():
 			return True, command_output, error
 		else:
 			return False, command_output, error
+
+	def WaitUntilGPSIsAvailablePretty(self):
+		while True:
+			signalReady, raw, error = self.GetGPSLocationPretty()
+			if signalReady:
+				break
+			else:
+				time.sleep(8)
 
 	def SendShellCommand(self, shellCommand):
 		command = subprocess.Popen([shellCommand], stdout=subprocess.PIPE, shell=True)
@@ -101,6 +120,14 @@ class PixieBoardGPSLocation():
 	def ParseOKInMsg(self, command_output):
 		output = str(command_output)
 		if COMMAND_OK_CALLBACK in output:
+			return True
+		else:
+			return False
+
+	def ParseCheckForValueZero(self, command_output):
+		output = str(command_output)
+		print(output)
+		if ZERO_STRING in output:
 			return True
 		else:
 			return False
