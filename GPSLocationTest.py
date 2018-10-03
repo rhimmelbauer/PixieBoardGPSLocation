@@ -27,17 +27,7 @@ def HowToUsePixieBoardGPSLocation():
                 "SpeedOverGroundKmH: {}\n" \
                 "SpeedOverGroundKnots: {}\n" \
                 "Date: {}\n" \
-                "Number Of Satellites: {}".format(pxbdGPS.UTCTime, \
-                								  pxbdGPS.Latitude,  \
-                								  pxbdGPS.Longitude, \
-                								  pxbdGPS.HorizontalPrecision, \
-                								  pxbdGPS.Altitude, \
-                								  pxbdGPS.Fix, \
-                								  pxbdGPS.Cog, \
-                								  pxbdGPS.SpeedOverGroundKmH, \
-                								  pxbdGPS.SpeedOverGroundKnots, \
-                								  pxbdGPS.Date, \
-                								  pxbdGPS.NumberOfSatellites)
+                "Number Of Satellites: {}".format(pxbdGPS.UTCTime, pxbdGPS.Latitude,  pxbdGPS.Longitude, pxbdGPS.HorizontalPrecision, pxbdGPS.Altitude, pxbdGPS.Fix, pxbdGPS.Cog, pxbdGPS.SpeedOverGroundKmH, pxbdGPS.SpeedOverGroundKnots, pxbdGPS.Date, pxbdGPS.NumberOfSatellites)
 	else:
 		print("Execute:\nsudo enablePixieModem\nWait for 30 seconds ")
 	
